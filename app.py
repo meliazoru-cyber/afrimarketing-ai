@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom High-End SaaS Styling (Obsidian Black & Metallic Gold)
+# Custom High-End SaaS Styling (Obsidian Black & Metallic Gold Text Control)
 st.markdown("""
     <style>
     /* Global App Background */
@@ -22,8 +22,8 @@ st.markdown("""
         border-right: 1px solid #1A1A1A;
     }
 
-    /* Typography */
-    h1, h2, h3, h4, h5, h6, p, span, label, div {
+    /* Global Typography Reset to White */
+    h1, h2, h3, h4, h5, h6, p, span, label, div, li {
         color: #FFFFFF !important;
         font-family: 'Inter', sans-serif;
     }
@@ -46,7 +46,7 @@ st.markdown("""
     }
     .hero-subtitle {
         font-size: 1.05rem;
-        color: #A0A0A0 !important;
+        color: #CCCCCC !important;
         margin-top: 5px;
     }
     .agency-tag {
@@ -63,15 +63,18 @@ st.markdown("""
         margin-bottom: 12px;
     }
 
-    /* Creative Result Cards */
+    /* Creative Result Cards - Ensuring 100% White Text Inside Boxes */
     .result-card {
-        background: #0A0A0A;
+        background: #0A0A0A !important;
         border: 1px solid #222222;
         border-left: 4px solid #D4AF37;
         padding: 24px;
         border-radius: 12px;
         margin-bottom: 20px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .result-card p, .result-card span, .result-card div, .result-card li {
+        color: #FFFFFF !important;
     }
     .result-card:hover {
         border-color: #D4AF37;
@@ -119,7 +122,7 @@ st.markdown("""
 
 # Sidebar Design & Variables Definition
 st.sidebar.markdown("<h3 style='color: #D4AF37 !important;'>✨ FAFI DIGITALS</h3>", unsafe_allow_html=True)
-st.sidebar.markdown("<p style='color: #888888 !important; font-size: 0.8rem;'>AI Marketing Suite v2.0</p>", unsafe_allow_html=True)
+st.sidebar.markdown("<p style='color: #CCCCCC !important; font-size: 0.8rem;'>AI Marketing Suite v2.0</p>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
 business_name = st.sidebar.text_input("🏢 Business / Brand Name", value="FAFI Digitals")
@@ -151,12 +154,12 @@ with col2:
     st.markdown("<h4 style='color: #D4AF37 !important;'>⏰ Optimal Posting Times</h4>", unsafe_allow_html=True)
     st.markdown("""
         <div class="metric-box">
-            <div style="font-size: 0.8rem; color: #AAAAAA;">Telegram Peak</div>
+            <div style="font-size: 0.8rem; color: #CCCCCC;">Telegram Peak</div>
             <div class="metric-val">12:30 PM & 7:30 PM</div>
         </div>
         <br>
         <div class="metric-box">
-            <div style="font-size: 0.8rem; color: #AAAAAA;">TikTok & Reels Peak</div>
+            <div style="font-size: 0.8rem; color: #CCCCCC;">TikTok & Reels Peak</div>
             <div class="metric-val">6:00 PM – 9:30 PM</div>
         </div>
     """, unsafe_allow_html=True)
@@ -197,55 +200,4 @@ if st.button("🚀 GENERATE CAMPAIGN SUITE", type="primary", use_container_width
             for title, text in captions:
                 st.markdown(f"""
                 <div class="result-card">
-                    <span class="style-pill">{title.split(':')[0]}</span>
-                    <h4 style='color: #D4AF37 !important; margin-top: 10px;'>{title}</h4>
-                    <p style='color: #FFFFFF !important; white-space: pre-line; line-height: 1.6;'>{text}</p>
-                </div>
-                """, unsafe_allow_html=True)
-
-        # TAB 2: SCRIPT
-        with tab2:
-            st.markdown("<h3 style='color: #D4AF37 !important;'>15-Second Short Video Concept (TikTok / Reels)</h3>", unsafe_allow_html=True)
-            st.markdown(f"""
-            <div class="result-card">
-                <p style='color: #FFFFFF !important; line-height: 1.7;'>
-                🎬 <b>0–3s (Visual Hook):</b> High-paced aesthetic montage of your work or workspace with trending Ethiopian background beat.<br><br>
-                🗣️ <b>3–10s (Value Pitch):</b> Voiceover / On-screen text: <i>"Looking to upgrade your brand in {location}? {business_name} makes it seamless."</i><br><br>
-                🎯 <b>10–15s (Call to Action):</b> Clean screen displaying your direct phone number <b>{phone_number}</b> and telebirr badge: <i>"Call or Telegram us right now at {phone_number} to book your slot!"</i>
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-
-        # TAB 3: INTELLIGENCE
-        with tab3:
-            st.markdown("<h3 style='color: #D4AF37 !important;'>🧠 AI Audience Insights</h3>", unsafe_allow_html=True)
-            st.markdown(f"""
-            <div class="result-card">
-                <p style='color: #FFFFFF !important; line-height: 1.7;'>
-                • <b>Target Audience:</b> Urban entrepreneurs, growing startups, and digital consumers (Ages 20–40) in {location}.<br><br>
-                • <b>Funnel Strategy:</b> TikTok / Instagram Awareness ➔ Telegram Channel / Direct Call ({phone_number}) ➔ telebirr Checkout.<br><br>
-                • <b>Direct Conversion Tip:</b> Having phone number <b>{phone_number}</b> visible at the bottom of every post increases trust and phone orders by over 40%.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-
-        # TAB 4: CALENDAR & TIMINGS
-        with tab4:
-            st.markdown("<h3 style='color: #D4AF37 !important;'>📅 Weekly Schedule & Best Posting Hours</h3>", unsafe_allow_html=True)
-            st.markdown(f"""
-            <div class="result-card">
-                <p style='color: #FFFFFF !important; line-height: 1.7;'>
-                🕒 <b>Best Hours to Post in Ethiopia (EAT):</b><br>
-                • <b>Lunch Hours:</b> 12:30 PM – 2:00 PM (Highest Telegram & Facebook reading rate)<br>
-                • <b>Evening Hours:</b> 6:30 PM – 9:30 PM (Peak TikTok & Instagram video consumption)<br><br>
-                📅 <b>Weekly Posting Blueprint:</b><br>
-                • <b>Monday (12:30 PM):</b> Post Educational (Style 4) to build market authority.<br>
-                • <b>Wednesday (7:00 PM):</b> Share behind-the-scenes video or client proof with Storytelling (Style 2).<br>
-                • <b>Friday (1:00 PM):</b> Push Limited Offer (Style 3) on Telegram with telebirr instructions & phone call CTA ({phone_number}).
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-
-# Footer
-st.markdown("---")
-st.markdown("<p style='text-align: center; color: #666666 !important; font-size: 0.85rem;'>AfriMarketing AI • Designed & Developed by <b>FAFI Digitals</b></p>", unsafe_allow_html=True)
+                    <span class
