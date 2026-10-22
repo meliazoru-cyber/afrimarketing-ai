@@ -92,7 +92,7 @@ st.markdown("""
         text-transform: uppercase;
     }
 
-    /* Input Fields, Textareas & Select Dropdown Styling (Forced Black Background & White Text) */
+    /* Input Fields, Textareas & Select Dropdown Styling */
     .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div {
         background-color: #0D0D0D !important;
         color: #FFFFFF !important;
@@ -100,12 +100,10 @@ st.markdown("""
         border-radius: 8px !important;
     }
     
-    /* Dropdown text color fix */
     div[data-baseweb="select"] span {
         color: #FFFFFF !important;
     }
     
-    /* Dropdown popup list styling */
     ul[data-baseweb="menu"] {
         background-color: #0D0D0D !important;
     }
@@ -212,20 +210,61 @@ if st.button("🚀 GENERATE CAMPAIGN SUITE", type="primary", use_container_width
 
             for title, text in captions:
                 short_title = title.split(':')[0]
-                card_html = f"""
+                card_html = """
                 <div class="result-card">
-                    <span class="style-pill">{short_title}</span>
-                    <h4 style='color: #D4AF37 !important; margin-top: 10px;'>{title}</h4>
-                    <p style='color: #FFFFFF !important; white-space: pre-line; line-height: 1.6;'>{text}</p>
+                    <span class="style-pill">{}</span>
+                    <h4 style="color: #D4AF37 !important; margin-top: 10px;">{}</h4>
+                    <p style="color: #FFFFFF !important; white-space: pre-line; line-height: 1.6;">{}</p>
                 </div>
-                """
+                """.format(short_title, title, text)
                 st.markdown(card_html, unsafe_allow_html=True)
 
         # TAB 2: SCRIPT
         with tab2:
             st.markdown("<h3 style='color: #D4AF37 !important;'>15-Second Short Video Concept (TikTok / Reels)</h3>", unsafe_allow_html=True)
-            script_html = f"""
+            script_html = """
             <div class="result-card">
-                <p style='color: #FFFFFF !important; line-height: 1.7;'>
+                <p style="color: #FFFFFF !important; line-height: 1.7;">
                 🎬 <b>0–3s (Visual Hook):</b> High-paced aesthetic montage of your work or workspace with trending Ethiopian background beat.<br><br>
-                🗣️ <b>3–10s (Value Pitch):</b>
+                🗣️ <b>3–10s (Value Pitch):</b> Voiceover / On-screen text: <i>"Looking to upgrade your brand in {}? {} makes it seamless."</i><br><br>
+                🎯 <b>10–15s (Call to Action):</b> Clean screen displaying your direct phone number <b>{}</b> and telebirr badge: <i>"Call or Telegram us right now at {} to book your slot!"</i>
+                </p>
+            </div>
+            """.format(location, business_name, phone_number, phone_number)
+            st.markdown(script_html, unsafe_allow_html=True)
+
+        # TAB 3: INTELLIGENCE
+        with tab3:
+            st.markdown("<h3 style='color: #D4AF37 !important;'>🧠 AI Audience Insights</h3>", unsafe_allow_html=True)
+            insight_html = """
+            <div class="result-card">
+                <p style="color: #FFFFFF !important; line-height: 1.7;">
+                • <b>Target Audience:</b> Urban entrepreneurs, growing startups, and digital consumers (Ages 20–40) in {}.<br><br>
+                • <b>Funnel Strategy:</b> TikTok / Instagram Awareness ➔ Telegram Channel / Direct Call ({}) ➔ telebirr Checkout.<br><br>
+                • <b>Direct Conversion Tip:</b> Having phone number <b>{}</b> visible at the bottom of every post increases trust and phone orders by over 40%.
+                </p>
+            </div>
+            """.format(location, phone_number, phone_number)
+            st.markdown(insight_html, unsafe_allow_html=True)
+
+        # TAB 4: CALENDAR & TIMINGS
+        with tab4:
+            st.markdown("<h3 style='color: #D4AF37 !important;'>📅 Weekly Schedule & Best Posting Hours</h3>", unsafe_allow_html=True)
+            calendar_html = """
+            <div class="result-card">
+                <p style="color: #FFFFFF !important; line-height: 1.7;">
+                🕒 <b>Best Hours to Post in Ethiopia (EAT):</b><br>
+                • <b>Lunch Hours:</b> 12:30 PM – 2:00 PM (Highest Telegram & Facebook reading rate)<br>
+                • <b>Evening Hours:</b> 6:30 PM – 9:30 PM (Peak TikTok & Instagram video consumption)<br><br>
+                📅 <b>Weekly Posting Blueprint:</b><br>
+                • <b>Monday (12:30 PM):</b> Post Educational (Style 4) to build market authority.<br>
+                • <b>Wednesday (7:00 PM):</b> Share behind-the-scenes video or client proof with Storytelling (Style 2).<br>
+                • <b>Friday (1:00 PM):</b> Push Limited Offer (Style 3) on Telegram with telebirr instructions & phone call CTA ({}).
+                </p>
+            </div>
+            """.format(phone_number)
+            st.markdown(calendar_html, unsafe_allow_html=True)
+
+# Footer
+st.markdown("---")
+st.markdown("<p style='text-align: center; color: #888888 !important; font-size: 0.85rem;'>AfriMarketing AI • Designed & Developed by <b>FAFI Digitals</b></p>", unsafe_allow_html=True)
