@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom High-End SaaS Styling (Obsidian Black & Metallic Gold Text Control)
+# Custom High-End SaaS Styling (Obsidian Black, Gold & Dark Dropdowns)
 st.markdown("""
     <style>
     /* Global App Background */
@@ -92,16 +92,29 @@ st.markdown("""
         text-transform: uppercase;
     }
 
-    /* Input Fields & Textareas Styling */
-    .stTextInput input, .stTextArea textarea, .stSelectbox select {
+    /* Input Fields, Textareas & Select Dropdown Styling (Forced Black Background & White Text) */
+    .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div {
         background-color: #0D0D0D !important;
         color: #FFFFFF !important;
         border: 1px solid #2A2A2A !important;
         border-radius: 8px !important;
     }
-    .stTextInput input:focus, .stTextArea textarea:focus {
-        border-color: #D4AF37 !important;
-        box-shadow: 0 0 10px rgba(212, 175, 55, 0.2) !important;
+    
+    /* Dropdown text color fix */
+    div[data-baseweb="select"] span {
+        color: #FFFFFF !important;
+    }
+    
+    /* Dropdown popup list styling */
+    ul[data-baseweb="menu"] {
+        background-color: #0D0D0D !important;
+    }
+    ul[data-baseweb="menu"] li {
+        color: #FFFFFF !important;
+    }
+    ul[data-baseweb="menu"] li:hover {
+        background-color: #D4AF37 !important;
+        color: #000000 !important;
     }
 
     /* Custom Metric Cards */
@@ -215,45 +228,4 @@ if st.button("🚀 GENERATE CAMPAIGN SUITE", type="primary", use_container_width
             <div class="result-card">
                 <p style='color: #FFFFFF !important; line-height: 1.7;'>
                 🎬 <b>0–3s (Visual Hook):</b> High-paced aesthetic montage of your work or workspace with trending Ethiopian background beat.<br><br>
-                🗣️ <b>3–10s (Value Pitch):</b> Voiceover / On-screen text: <i>"Looking to upgrade your brand in {location}? {business_name} makes it seamless."</i><br><br>
-                🎯 <b>10–15s (Call to Action):</b> Clean screen displaying your direct phone number <b>{phone_number}</b> and telebirr badge: <i>"Call or Telegram us right now at {phone_number} to book your slot!"</i>
-                </p>
-            </div>
-            """
-            st.markdown(script_html, unsafe_allow_html=True)
-
-        # TAB 3: INTELLIGENCE
-        with tab3:
-            st.markdown("<h3 style='color: #D4AF37 !important;'>🧠 AI Audience Insights</h3>", unsafe_allow_html=True)
-            insight_html = f"""
-            <div class="result-card">
-                <p style='color: #FFFFFF !important; line-height: 1.7;'>
-                • <b>Target Audience:</b> Urban entrepreneurs, growing startups, and digital consumers (Ages 20–40) in {location}.<br><br>
-                • <b>Funnel Strategy:</b> TikTok / Instagram Awareness ➔ Telegram Channel / Direct Call ({phone_number}) ➔ telebirr Checkout.<br><br>
-                • <b>Direct Conversion Tip:</b> Having phone number <b>{phone_number}</b> visible at the bottom of every post increases trust and phone orders by over 40%.
-                </p>
-            </div>
-            """
-            st.markdown(insight_html, unsafe_allow_html=True)
-
-        # TAB 4: CALENDAR & TIMINGS
-        with tab4:
-            st.markdown("<h3 style='color: #D4AF37 !important;'>📅 Weekly Schedule & Best Posting Hours</h3>", unsafe_allow_html=True)
-            calendar_html = f"""
-            <div class="result-card">
-                <p style='color: #FFFFFF !important; line-height: 1.7;'>
-                🕒 <b>Best Hours to Post in Ethiopia (EAT):</b><br>
-                • <b>Lunch Hours:</b> 12:30 PM – 2:00 PM (Highest Telegram & Facebook reading rate)<br>
-                • <b>Evening Hours:</b> 6:30 PM – 9:30 PM (Peak TikTok & Instagram video consumption)<br><br>
-                📅 <b>Weekly Posting Blueprint:</b><br>
-                • <b>Monday (12:30 PM):</b> Post Educational (Style 4) to build market authority.<br>
-                • <b>Wednesday (7:00 PM):</b> Share behind-the-scenes video or client proof with Storytelling (Style 2).<br>
-                • <b>Friday (1:00 PM):</b> Push Limited Offer (Style 3) on Telegram with telebirr instructions & phone call CTA ({phone_number}).
-                </p>
-            </div>
-            """
-            st.markdown(calendar_html, unsafe_allow_html=True)
-
-# Footer
-st.markdown("---")
-st.markdown("<p style='text-align: center; color: #888888 !important; font-size: 0.85rem;'>AfriMarketing AI • Designed & Developed by <b>FAFI Digitals</b></p>", unsafe_allow_html=True)
+                🗣️ <b>3–10s (Value Pitch):</b>
