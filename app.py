@@ -251,4 +251,53 @@ if st.button("🚀 GENERATE CREATIVE CAMPAIGN SUITE", type="primary", use_contai
         with st.spinner("FAFI Digitals AI is crafting your marketing suite..."):
             payments_str = " | ".join(payment_method) if payment_method else "Contact admin"
             
-            ai_prompt = f"Act as a top digital marketer for {business_name}
+            ai_prompt = f"""Act as a top digital marketer for {business_name} in Ethiopia.
+Tone: {brand_tone}
+Offer: {product_description}
+Location: {location}
+Payment: {payments_str}
+Phone: {phone_number}
+
+Create 5 Ethio-English social captions, a 15-second TikTok video script, and local marketing tips."""
+            
+            ai_output = generate_ai_content(ai_prompt)
+            time.sleep(1.0)
+
+        st.success("Campaign Suite Successfully Generated!")
+
+        # Tabs Setup
+        tab1, tab2, tab3, tab4 = st.tabs([
+            "📲 Live Telegram Mockup", 
+            "🔥 5 High-Conversion Captions", 
+            "🎬 TikTok Storyboard Script", 
+            "📅 Weekly Growth Blueprint"
+        ])
+
+        # TAB 1: LIVE TELEGRAM MOCKUP
+        with tab1:
+            st.markdown("<h3 style='color: #D4AF37 !important;'>Telegram Channel Broadcast Preview</h3>", unsafe_allow_html=True)
+            
+            b_name_upper = business_name.upper()
+            loc_upper = location.upper()
+            
+            tg_sample_text = f"✨ <b>{b_name_upper}</b> | {loc_upper}<br><br>📌 <b>ለድርጅትዎ የሚሆን ምርጥ አሰራር:</b><br>{product_description}<br><br>💳 <b>የክፍያ መንገዶች / Payment:</b> {payments_str}<br>📍 <b>አድራሻ / Location:</b> {location}<br><br>📞 <b>ለማዘዝ በቀጥታ ይደውሉ:</b> {phone_number}<br>📲 <b>Telegram Direct:</b> @FAFIdigitals"
+
+            st.markdown(f"""
+            <div class="tg-preview-card">
+                <div class="tg-header">📢 {business_name} Official Broadcast</div>
+                <div style="font-size: 0.95rem; line-height: 1.6; color: #FFFFFF;">{tg_sample_text}</div>
+                <div style="text-align: right; font-size: 0.75rem; color: #64B5F6; margin-top: 12px;">12:30 PM • 1.4K views</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        # TAB 2: CAPTIONS
+        with tab2:
+            st.markdown(f"<h3 style='color: #D4AF37 !important; margin-bottom: 20px;'>Generated Copy Options ({brand_tone})</h3>", unsafe_allow_html=True)
+            
+            if ai_output:
+                st.markdown(f"""
+                <div class="result-card">
+                    <span class="style-pill">DYNAMIC AI GENERATION</span>
+                    <p style="color: #FFFFFF !important; white-space: pre-line; line-height: 1.6; margin-top: 15px;">{ai_output}</p>
+                </div>
+                """,
