@@ -280,24 +280,4 @@ Create 5 Ethio-English social captions, a 15-second TikTok video script, and loc
             b_name_upper = business_name.upper()
             loc_upper = location.upper()
             
-            tg_sample_text = f"✨ <b>{b_name_upper}</b> | {loc_upper}<br><br>📌 <b>ለድርጅትዎ የሚሆን ምርጥ አሰራር:</b><br>{product_description}<br><br>💳 <b>የክፍያ መንገዶች / Payment:</b> {payments_str}<br>📍 <b>አድራሻ / Location:</b> {location}<br><br>📞 <b>ለማዘዝ በቀጥታ ይደውሉ:</b> {phone_number}<br>📲 <b>Telegram Direct:</b> @FAFIdigitals"
-
-            st.markdown(f"""
-            <div class="tg-preview-card">
-                <div class="tg-header">📢 {business_name} Official Broadcast</div>
-                <div style="font-size: 0.95rem; line-height: 1.6; color: #FFFFFF;">{tg_sample_text}</div>
-                <div style="text-align: right; font-size: 0.75rem; color: #64B5F6; margin-top: 12px;">12:30 PM • 1.4K views</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        # TAB 2: CAPTIONS
-        with tab2:
-            st.markdown(f"<h3 style='color: #D4AF37 !important; margin-bottom: 20px;'>Generated Copy Options ({brand_tone})</h3>", unsafe_allow_html=True)
-            
-            if ai_output:
-                st.markdown(f"""
-                <div class="result-card">
-                    <span class="style-pill">DYNAMIC AI GENERATION</span>
-                    <p style="color: #FFFFFF !important; white-space: pre-line; line-height: 1.6; margin-top: 15px;">{ai_output}</p>
-                </div>
-                """,
+            tg_sample_text = f"✨ <b>{b_name_upper}</b> | {loc_upper}<br><br>📌 <b>ለድርጅትዎ የሚሆን ምርጥ አሰራር:</b><br>{product_description}<br><br>💳 <b>የ
