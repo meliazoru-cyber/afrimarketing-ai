@@ -9,33 +9,17 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom High-End SaaS Styling (Obsidian Black, Gold & Dark Dropdowns)
+# Custom High-End SaaS Styling
 st.markdown("""
     <style>
-    /* Global App Background */
-    .stApp {
-        background-color: #030303 !important;
-        color: #FFFFFF !important;
-    }
-    [data-testid="stSidebar"] {
-        background-color: #080808 !important;
-        border-right: 1px solid #1A1A1A;
-    }
-
-    /* Global Typography Reset to White */
-    h1, h2, h3, h4, h5, h6, p, span, label, div, li {
-        color: #FFFFFF !important;
-        font-family: 'Inter', sans-serif;
-    }
-
     /* Hero Header */
     .hero-container {
         padding: 30px 20px;
-        background: linear-gradient(135deg, #0A0A0A 0%, #141414 100%);
-        border: 1px solid #222222;
+        background: linear-gradient(135deg, #050505 0%, #111111 100%);
+        border: 1px solid #1A1A1A;
         border-radius: 16px;
         margin-bottom: 25px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
     }
     .hero-title {
         font-size: 2.8rem;
@@ -46,7 +30,7 @@ st.markdown("""
     }
     .hero-subtitle {
         font-size: 1.05rem;
-        color: #CCCCCC !important;
+        color: #FFFFFF !important;
         margin-top: 5px;
     }
     .agency-tag {
@@ -65,16 +49,19 @@ st.markdown("""
 
     /* Creative Result Cards */
     .result-card {
-        background: #0A0A0A !important;
-        border: 1px solid #222222;
+        background: #080808 !important;
+        border: 1px solid #1A1A1A;
         border-left: 4px solid #D4AF37;
         padding: 24px;
         border-radius: 12px;
         margin-bottom: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.6);
     }
-    .result-card p, .result-card span, .result-card div, .result-card li {
+    .result-card p, .result-card span, .result-card div, .result-card li, .result-card b, .result-card i {
         color: #FFFFFF !important;
+    }
+    .result-card h4 {
+        color: #D4AF37 !important;
     }
     .result-card:hover {
         border-color: #D4AF37;
@@ -92,33 +79,10 @@ st.markdown("""
         text-transform: uppercase;
     }
 
-    /* Input Fields, Textareas & Select Dropdown Styling */
-    .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div {
-        background-color: #0D0D0D !important;
-        color: #FFFFFF !important;
-        border: 1px solid #2A2A2A !important;
-        border-radius: 8px !important;
-    }
-    
-    div[data-baseweb="select"] span {
-        color: #FFFFFF !important;
-    }
-    
-    ul[data-baseweb="menu"] {
-        background-color: #0D0D0D !important;
-    }
-    ul[data-baseweb="menu"] li {
-        color: #FFFFFF !important;
-    }
-    ul[data-baseweb="menu"] li:hover {
-        background-color: #D4AF37 !important;
-        color: #000000 !important;
-    }
-
     /* Custom Metric Cards */
     .metric-box {
-        background: #0A0A0A;
-        border: 1px solid #1F1F1F;
+        background: #080808;
+        border: 1px solid #1A1A1A;
         padding: 15px;
         border-radius: 10px;
         text-align: center;
@@ -128,12 +92,22 @@ st.markdown("""
         font-size: 1.1rem;
         font-weight: bold;
     }
+
+    /* Footer text color */
+    .main-footer {
+        text-align: center; 
+        color: #AAAAAA !important; 
+        font-size: 0.85rem;
+    }
+    .main-footer b {
+        color: #FFFFFF !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
 # Sidebar Design & Variables Definition
 st.sidebar.markdown("<h3 style='color: #D4AF37 !important;'>✨ FAFI DIGITALS</h3>", unsafe_allow_html=True)
-st.sidebar.markdown("<p style='color: #CCCCCC !important; font-size: 0.8rem;'>AI Marketing Suite v2.0</p>", unsafe_allow_html=True)
+st.sidebar.markdown("<p style='color: #FFFFFF !important; font-size: 0.8rem;'>AI Marketing Suite v2.0</p>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
 business_name = st.sidebar.text_input("🏢 Business / Brand Name", value="FAFI Digitals")
@@ -165,12 +139,12 @@ with col2:
     st.markdown("<h4 style='color: #D4AF37 !important;'>⏰ Optimal Posting Times</h4>", unsafe_allow_html=True)
     st.markdown("""
         <div class="metric-box">
-            <div style="font-size: 0.8rem; color: #CCCCCC;">Telegram Peak</div>
+            <div style="font-size: 0.8rem; color: #FFFFFF;">Telegram Peak</div>
             <div class="metric-val">12:30 PM & 7:30 PM</div>
         </div>
         <br>
         <div class="metric-box">
-            <div style="font-size: 0.8rem; color: #CCCCCC;">TikTok & Reels Peak</div>
+            <div style="font-size: 0.8rem; color: #FFFFFF;">TikTok & Reels Peak</div>
             <div class="metric-val">6:00 PM – 9:30 PM</div>
         </div>
     """, unsafe_allow_html=True)
@@ -267,4 +241,4 @@ if st.button("🚀 GENERATE CAMPAIGN SUITE", type="primary", use_container_width
 
 # Footer
 st.markdown("---")
-st.markdown("<p style='text-align: center; color: #888888 !important; font-size: 0.85rem;'>AfriMarketing AI • Designed & Developed by <b>FAFI Digitals</b></p>", unsafe_allow_html=True)
+st.markdown("<p class='main-footer'>AfriMarketing AI • Designed & Developed by <b>FAFI Digitals</b></p>", unsafe_allow_html=True)
