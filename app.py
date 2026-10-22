@@ -176,25 +176,4 @@ st.markdown("""
     /* Footer */
     .main-footer {
         text-align: center; 
-        color: #AAAAAA !important; 
-        font-size: 0.85rem;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# Sidebar Options
-st.sidebar.markdown("<h3 style='color: #D4AF37 !important;'>✨ FAFI DIGITALS</h3>", unsafe_allow_html=True)
-st.sidebar.markdown("<p style='color: #FFFFFF !important; font-size: 0.85rem;'>AI Marketing Suite v3.5</p>", unsafe_allow_html=True)
-st.sidebar.markdown("---")
-
-business_name = st.sidebar.text_input("🏢 Business / Brand Name", value="FAFI Digitals")
-phone_number = st.sidebar.text_input("📞 Direct Contact Number", value="0901183481")
-location = st.sidebar.selectbox("📍 Target Market", ["Addis Ababa Urban", "Regional Centers", "Ethiopian Diaspora", "Nationwide"])
-brand_tone = st.sidebar.selectbox("🎨 Brand Tone", ["High-End Luxury", "Gen-Z Viral Slang", "Direct Sales Heavy", "Educational & Trust"])
-payment_method = st.sidebar.multiselect("💳 Payment Methods", ["telebirr", "CBE Birr", "Bank Transfer", "Cash on Delivery"], default=["telebirr", "Cash on Delivery"])
-
-st.sidebar.markdown("---")
-gemini_api_key = st.sidebar.text_input("🔑 Gemini API Key (Optional)", type="password", help="Leave blank for built-in local engine!")
-
-# Hero Section
-st.markdown
+        color: #AAAAAA !important;
