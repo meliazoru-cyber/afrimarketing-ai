@@ -237,4 +237,18 @@ def generate_ai_content(prompt):
         try:
             genai.configure(api_key=gemini_api_key)
             model = genai.GenerativeModel("gemini-1.5-flash")
-            response
+            response = model.generate_content(prompt)
+            return response.text
+        except Exception:
+            return None
+    return None
+
+# Action Generator Button
+if st.button("🚀 GENERATE CREATIVE CAMPAIGN SUITE", type="primary", use_container_width=True):
+    if not product_description:
+        st.warning("Please describe your offer or business goal first!")
+    else:
+        with st.spinner("FAFI Digitals AI is crafting your marketing suite..."):
+            payments_str = " | ".join(payment_method) if payment_method else "Contact admin"
+            
+            ai_prompt = f"Act as a top digital marketer for {business_name}
