@@ -25,13 +25,22 @@ st.markdown("""
         color: #FFFFFF !important;
     }
 
+    /* Force Sidebar Specific Visibility Rules */
+    [data-testid="stSidebar"] * {
+        color: #FFFFFF !important;
+    }
+    [data-testid="stSidebar"] label, [data-testid="stSidebar"] p {
+        color: #D4AF37 !important;
+        font-weight: bold !important;
+    }
+
     /* All Header and Body Text Forced Bright White */
     h1, h2, h3, h4, h5, h6, p, span, label, div, li, small {
         color: #FFFFFF !important;
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
-    /* Input Labels Bright Gold */
+    /* Main Form Input Labels Bright Gold */
     .stTextInput > label, .stTextArea > label, .stSelectbox > label, .stMultiSelect > label {
         color: #D4AF37 !important;
         font-weight: 700 !important;
@@ -52,9 +61,8 @@ st.markdown("""
         border: 1px solid #333333 !important;
         border-radius: 8px !important;
     }
-    div[data-baseweb="select"] * {
+    div[data-baseweb="select"] span {
         color: #FFFFFF !important;
-        background-color: transparent !important;
     }
     ul[data-baseweb="menu"] {
         background-color: #1A1A1A !important;
@@ -176,7 +184,7 @@ st.markdown("""
 
 # Sidebar Options
 st.sidebar.markdown("<h3 style='color: #D4AF37 !important;'>✨ FAFI DIGITALS</h3>", unsafe_allow_html=True)
-st.sidebar.markdown("<p style='color: #FFFFFF !important; font-size: 0.8rem;'>AI Marketing Suite v3.5</p>", unsafe_allow_html=True)
+st.sidebar.markdown("<p style='color: #FFFFFF !important; font-size: 0.85rem;'>AI Marketing Suite v3.5</p>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
 business_name = st.sidebar.text_input("🏢 Business / Brand Name", value="FAFI Digitals")
@@ -229,117 +237,4 @@ def generate_ai_content(prompt):
         try:
             genai.configure(api_key=gemini_api_key)
             model = genai.GenerativeModel("gemini-1.5-flash")
-            response = model.generate_content(prompt)
-            return response.text
-        except Exception:
-            return None
-    return None
-
-# Action Generator Button
-if st.button("🚀 GENERATE CREATIVE CAMPAIGN SUITE", type="primary", use_container_width=True):
-    if not product_description:
-        st.warning("Please describe your offer or business goal first!")
-    else:
-        with st.spinner("FAFI Digitals AI is crafting your marketing suite..."):
-            payments_str = " | ".join(payment_method) if payment_method else "Contact admin"
-            
-            ai_prompt = f"Act as a top digital marketer for {business_name} in Ethiopia.\nTone: {brand_tone}\nOffer: {product_description}\nLocation: {location}\nPayment: {payments_str}\nPhone: {phone_number}\n\nCreate 5 Ethio-English social captions, a 15-second TikTok video script, and local marketing tips."
-            
-            ai_output = generate_ai_content(ai_prompt)
-            time.sleep(1.0)
-
-        st.success("Campaign Suite Successfully Generated!")
-
-        # Tabs Setup
-        tab1, tab2, tab3, tab4 = st.tabs([
-            "📲 Live Telegram Mockup", 
-            "🔥 5 High-Conversion Captions", 
-            "🎬 TikTok Storyboard Script", 
-            "📅 Weekly Growth Blueprint"
-        ])
-
-        # TAB 1: LIVE TELEGRAM MOCKUP
-        with tab1:
-            st.markdown("<h3 style='color: #D4AF37 !important;'>Telegram Channel Broadcast Preview</h3>", unsafe_allow_html=True)
-            
-            b_name_upper = business_name.upper()
-            loc_upper = location.upper()
-            
-            tg_sample_text = f"✨ <b>{b_name_upper}</b> | {loc_upper}<br><br>📌 <b>ለድርጅትዎ የሚሆን ምርጥ አሰራር:</b><br>{product_description}<br><br>💳 <b>የክፍያ መንገዶች / Payment:</b> {payments_str}<br>📍 <b>አድራሻ / Location:</b> {location}<br><br>📞 <b>ለማዘዝ በቀጥታ ይደውሉ:</b> {phone_number}<br>📲 <b>Telegram Direct:</b> @FAFIdigitals"
-
-            st.markdown(f"""
-            <div class="tg-preview-card">
-                <div class="tg-header">📢 {business_name} Official Broadcast</div>
-                <div style="font-size: 0.95rem; line-height: 1.6; color: #FFFFFF;">{tg_sample_text}</div>
-                <div style="text-align: right; font-size: 0.75rem; color: #64B5F6; margin-top: 12px;">12:30 PM • 1.4K views</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        # TAB 2: CAPTIONS
-        with tab2:
-            st.markdown(f"<h3 style='color: #D4AF37 !important; margin-bottom: 20px;'>Generated Copy Options ({brand_tone})</h3>", unsafe_allow_html=True)
-            
-            if ai_output:
-                st.markdown(f"""
-                <div class="result-card">
-                    <span class="style-pill">DYNAMIC AI GENERATION</span>
-                    <p style="color: #FFFFFF !important; white-space: pre-line; line-height: 1.6; margin-top: 15px;">{ai_output}</p>
-                </div>
-                """, unsafe_allow_html=True)
-            else:
-                captions = [
-                    ("STYLE 1: Direct Conversion CTA", f"✨ **{business_name}** - {location}\n\n📌 **ለድርጅትዎ የሚሆን ምርጥ አሰራር:**\n{product_description}\n\n💳 **Payment:** {payments_str}\n📍 **Location:** {location}\n📞 **ለማዘዝ በቀጥታ ይደውሉ / Call/Text Now:** {phone_number}\n👉 Join our official Telegram channel for direct updates!"),
-                    ("STYLE 2: Storytelling & Problem Solver", f"\"አዲስ ነገር ለሚፈልጉ ሁሉ! 🇪🇹🔥\"\n\nStruggling to stand out in {location}? **{business_name}** provides the exact solution you need.\n\n{product_description}\n\n💡 Simple, reliable, and tailored for your brand growth.\n📲 **Direct Contact:** Call or message us directly at {phone_number}\n💳 **Accepted:** {payments_str}"),
-                    ("STYLE 3: Urgency & Limited Slots", f"⚡ **SPECIAL LIMITED OFFER THIS WEEK!** ⚡\n\n**{business_name}** brings you exclusive services in {location}.\n\n👉 {product_description}\n\n🔥 Only 5 client slots remaining for this week! Secure yours now.\n📞 **Quick Booking:** Call or Telegram us at {phone_number}\n💳 **Payment via:** {payments_str}"),
-                    ("STYLE 4: Educational & Trust First", f"💡 **Did you know?** Professional presentation increases customer trust by over 60% in local markets.\n\nAt **{business_name}**, we handle it effortlessly:\n• {product_description}\n\n📩 Request a consultation today! Call/SMS: {phone_number}"),
-                    ("STYLE 5: Gen-Z Viral Hook", f"\"አዲስ አበቤዎች Check this out! 🇪🇹✨\"\n\nIf you want top-tier quality without the usual hassle, **{business_name}** has you covered.\n\n{product_description}\n\n👇 Text us on Telegram or call {phone_number} to order instantly! 💬")
-                ]
-
-                for title, text in captions:
-                    short_title = title.split(':')[0]
-                    card_html = f"""
-                    <div class="result-card">
-                        <span class="style-pill">{short_title}</span>
-                        <h4 style="color: #D4AF37 !important; margin-top: 10px;">{title}</h4>
-                        <p style="color: #FFFFFF !important; white-space: pre-line; line-height: 1.6;">{text}</p>
-                    </div>
-                    """
-                    st.markdown(card_html, unsafe_allow_html=True)
-
-        # TAB 3: TIKTOK SCRIPT
-        with tab3:
-            st.markdown("<h3 style='color: #D4AF37 !important;'>15-Second Viral Short Video Storyboard</h3>", unsafe_allow_html=True)
-            script_html = f"""
-            <div class="result-card">
-                <p style="color: #FFFFFF !important; line-height: 1.8;">
-                🎥 <b>0–3s (Visual Hook):</b> High-energy fast cuts showing your work or studio process in {location} with trending Habesha audio beat.<br>
-                🗣️ <b>Voiceover:</b> <i>"አዲስ አበቤዎች! If you want your business to stand out, watch this."</i><br><br>
-                🎬 <b>3–10s (Value Pitch):</b> Show clear close-ups or client results.<br>
-                🗣️ <b>Voiceover:</b> <i>"{business_name} delivers top-tier results tailored specifically for businesses in {location}."</i><br><br>
-                🎯 <b>10–15s (Call to Action):</b> Clean screen displaying telebirr badge and your direct phone number <b>{phone_number}</b>.<br>
-                🗣️ <b>Voiceover:</b> <i>"Call or message us right now at {phone_number} to secure your slot!"</i>
-                </p>
-            </div>
-            """
-            st.markdown(script_html, unsafe_allow_html=True)
-
-        # TAB 4: GROWTH PLAN
-        with tab4:
-            st.markdown("<h3 style='color: #D4AF37 !important;'>📅 Weekly Schedule & Local Hashtags</h3>", unsafe_allow_html=True)
-            calendar_html = f"""
-            <div class="result-card">
-                <p style="color: #FFFFFF !important; line-height: 1.8;">
-                📌 <b>Recommended Local Hashtags:</b><br>
-                #AddisAbaba #Ethiopia #FAFI_Digitals #HabeshaStartups #AddisBusiness #Telebirr #MadeInEthiopia<br><br>
-                🕒 <b>Best Posting Blueprint (EAT):</b><br>
-                • <b>Monday (12:30 PM):</b> Post Educational (Style 4) on Telegram to build trust.<br>
-                • <b>Wednesday (7:00 PM):</b> Post TikTok video script with trending Habesha audio beat.<br>
-                • <b>Friday (1:00 PM):</b> Push Flash Offer (Style 3) with direct call CTA ({phone_number}) and telebirr details.
-                </p>
-            </div>
-            """
-            st.markdown(calendar_html, unsafe_allow_html=True)
-
-# Footer
-st.markdown("---")
-st.markdown("<p class='main-footer'>AfriMarketing AI • Designed & Developed by <b>FAFI Digitals</b></p>", unsafe_allow_html=True)
+            response
