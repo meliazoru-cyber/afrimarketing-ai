@@ -16,21 +16,26 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom High-End SaaS Styling (Obsidian Black, Gold & Crisp White)
+# Custom High-End SaaS Styling (Locked Obsidian Black, Gold & Crisp White)
 st.markdown("""
     <style>
-    .stApp, [data-testid="stSidebar"] {
+    /* Force Full Black Background Everywhere */
+    .stApp, [data-testid="stSidebar"], [data-testid="stHeader"], [data-testid="stToolbar"] {
         background-color: #000000 !important;
         color: #FFFFFF !important;
     }
+
+    /* Force All Text and Headers to Pure White */
     h1, h2, h3, h4, h5, h6, p, span, label, div, li, small {
         color: #FFFFFF !important;
         font-family: 'Inter', sans-serif;
     }
+
+    /* Hero Header Container */
     .hero-container {
         padding: 30px 20px;
-        background: linear-gradient(135deg, #050505 0%, #111111 100%);
-        border: 1px solid #1A1A1A;
+        background: #0A0A0A !important;
+        border: 1px solid #222222 !important;
         border-radius: 16px;
         margin-bottom: 25px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
@@ -49,9 +54,9 @@ st.markdown("""
     }
     .agency-tag {
         display: inline-block;
-        background: rgba(212, 175, 55, 0.1);
+        background: rgba(212, 175, 55, 0.1) !important;
         color: #D4AF37 !important;
-        border: 1px solid rgba(212, 175, 55, 0.3);
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
         padding: 4px 12px;
         border-radius: 20px;
         font-size: 0.75rem;
@@ -60,14 +65,16 @@ st.markdown("""
         letter-spacing: 1px;
         margin-bottom: 12px;
     }
+
+    /* Result Cards Styling */
     .result-card {
         background: #080808 !important;
-        border: 1px solid #1A1A1A;
-        border-left: 4px solid #D4AF37;
+        border: 1px solid #222222 !important;
+        border-left: 4px solid #D4AF37 !important;
         padding: 24px;
         border-radius: 12px;
         margin-bottom: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.8);
     }
     .result-card p, .result-card span, .result-card div, .result-card li, .result-card b {
         color: #FFFFFF !important;
@@ -75,8 +82,10 @@ st.markdown("""
     .result-card h4 {
         color: #D4AF37 !important;
     }
+
+    /* Style Badges */
     .style-pill {
-        background: #D4AF37;
+        background: #D4AF37 !important;
         color: #000000 !important;
         font-weight: 800;
         padding: 3px 10px;
@@ -84,9 +93,11 @@ st.markdown("""
         font-size: 0.75rem;
         text-transform: uppercase;
     }
+
+    /* Metric Boxes */
     .metric-box {
-        background: #080808;
-        border: 1px solid #1A1A1A;
+        background: #080808 !important;
+        border: 1px solid #222222 !important;
         padding: 15px;
         border-radius: 10px;
         text-align: center;
@@ -96,6 +107,25 @@ st.markdown("""
         font-size: 1.1rem;
         font-weight: bold;
     }
+
+    /* Input Fields & Dropdowns Black Background */
+    .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div {
+        background-color: #111111 !important;
+        color: #FFFFFF !important;
+        border: 1px solid #333333 !important;
+        border-radius: 8px !important;
+    }
+    div[data-baseweb="select"] span {
+        color: #FFFFFF !important;
+    }
+    ul[data-baseweb="menu"] {
+        background-color: #111111 !important;
+    }
+    ul[data-baseweb="menu"] li {
+        color: #FFFFFF !important;
+    }
+
+    /* Footer */
     .main-footer {
         text-align: center; 
         color: #AAAAAA !important; 
@@ -112,8 +142,7 @@ st.sidebar.markdown("<h3 style='color: #D4AF37 !important;'>✨ FAFI DIGITALS</h
 st.sidebar.markdown("<p style='color: #FFFFFF !important; font-size: 0.8rem;'>AI Marketing Suite v3.0</p>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
-# Live AI API Key Input
-gemini_api_key = st.sidebar.text_input("🔑 Gemini API Key (Optional for Live AI)", type="password", help="Paste your Gemini API key to generate live AI content dynamically.")
+gemini_api_key = st.sidebar.text_input("🔑 Gemini API Key (Optional)", type="password")
 st.sidebar.markdown("---")
 
 business_name = st.sidebar.text_input("🏢 Business / Brand Name", value="FAFI Digitals")
@@ -157,7 +186,6 @@ with col2:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# Function to generate content via Gemini API if key is provided
 def generate_ai_content(prompt):
     if GEMINI_AVAILABLE and gemini_api_key:
         try:
@@ -177,7 +205,6 @@ if st.button("🚀 GENERATE ADVANCED AI CAMPAIGN", type="primary", use_container
         with st.spinner("FAFI Digitals AI is analyzing Ethiopian consumer data and generating deep campaign assets..."):
             payments_str = " | ".join(payment_method) if payment_method else "Contact admin"
             
-            # Prepare AI Prompt if API key exists
             ai_prompt = f"""
             You are an expert Ethiopian digital marketing strategist working for {business_name}. 
             Product/Service: {product_description}
@@ -206,7 +233,7 @@ if st.button("🚀 GENERATE ADVANCED AI CAMPAIGN", type="primary", use_container
             "🏷️ Hashtags & Growth Plan"
         ])
 
-        # TAB 1: CAPTIONS (Live AI or Rich Fallback)
+        # TAB 1: CAPTIONS
         with tab1:
             st.markdown("<h3 style='color: #D4AF37 !important; margin-bottom: 20px;'>Generated Copy Options</h3>", unsafe_allow_html=True)
             
@@ -262,7 +289,7 @@ if st.button("🚀 GENERATE ADVANCED AI CAMPAIGN", type="primary", use_container
                 • <b>Conversion Funnel:</b> TikTok / Instagram Short Video ➔ Telegram Channel Subscriber ➔ Direct Call / Telebirr Checkout.
                 </p>
             </div>
-            """.format(location, phone_number, phone_number)
+            """.format(location, phone_number)
             st.markdown(insight_html, unsafe_allow_html=True)
 
         # TAB 4: HASHTAGS & GROWTH
