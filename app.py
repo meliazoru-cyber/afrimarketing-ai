@@ -16,25 +16,69 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# High-Contrast Luxury SaaS CSS (Obsidian Black, Metallic Gold & Bright White Text)
+# High-Contrast High-Visibility Styling
 st.markdown("""
     <style>
-    /* Force Dark Theme Background Everywhere */
+    /* Global App Background */
     .stApp, [data-testid="stSidebar"], [data-testid="stHeader"], [data-testid="stToolbar"] {
-        background-color: #000000 !important;
+        background-color: #050505 !important;
         color: #FFFFFF !important;
     }
 
-    /* Force Pure White Typography */
+    /* All Header and Body Text Forced Bright White */
     h1, h2, h3, h4, h5, h6, p, span, label, div, li, small {
         color: #FFFFFF !important;
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
+    /* Input Labels Bright Gold */
+    .stTextInput > label, .stTextArea > label, .stSelectbox > label, .stMultiSelect > label {
+        color: #D4AF37 !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+    }
+
+    /* Input Fields Background & Contrast */
+    .stTextInput input, .stTextArea textarea {
+        background-color: #1A1A1A !important;
+        color: #FFFFFF !important;
+        border: 1px solid #333333 !important;
+        border-radius: 8px !important;
+    }
+
+    /* Selectbox Container & Dropdown Styling */
+    div[data-baseweb="select"] > div {
+        background-color: #1A1A1A !important;
+        border: 1px solid #333333 !important;
+        border-radius: 8px !important;
+    }
+    div[data-baseweb="select"] * {
+        color: #FFFFFF !important;
+        background-color: transparent !important;
+    }
+    ul[data-baseweb="menu"] {
+        background-color: #1A1A1A !important;
+        border: 1px solid #333333 !important;
+    }
+    ul[data-baseweb="menu"] li {
+        color: #FFFFFF !important;
+        background-color: #1A1A1A !important;
+    }
+    ul[data-baseweb="menu"] li:hover {
+        background-color: #D4AF37 !important;
+        color: #000000 !important;
+    }
+
+    /* MultiSelect Tags */
+    span[data-baseweb="tag"] {
+        background-color: #D4AF37 !important;
+        color: #000000 !important;
+    }
+
     /* Hero Branding Header */
     .hero-container {
         padding: 28px 22px;
-        background: #0A0A0A !important;
+        background: #0F0F0F !important;
         border: 1px solid #2B2B2B !important;
         border-radius: 16px;
         margin-bottom: 24px;
@@ -82,10 +126,10 @@ st.markdown("""
         margin-bottom: 12px;
     }
 
-    /* Clear High-Contrast Output Cards */
+    /* High-Contrast Output Cards */
     .result-card {
-        background: #0D0D0D !important;
-        border: 1px solid #282828 !important;
+        background: #121212 !important;
+        border: 1px solid #2E2E2E !important;
         border-left: 4px solid #D4AF37 !important;
         padding: 22px;
         border-radius: 12px;
@@ -109,48 +153,11 @@ st.markdown("""
 
     /* Metric Display Cards */
     .metric-box {
-        background: #0D0D0D !important;
-        border: 1px solid #282828 !important;
+        background: #121212 !important;
+        border: 1px solid #2E2E2E !important;
         padding: 16px;
         border-radius: 12px;
         text-align: center;
     }
     .metric-val {
-        color: #D4AF37 !important;
-        font-size: 1.15rem;
-        font-weight: bold;
-    }
-
-    /* Dark Input Controls Fix */
-    .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div {
-        background-color: #121212 !important;
-        color: #FFFFFF !important;
-        border: 1px solid #333333 !important;
-        border-radius: 8px !important;
-    }
-    div[data-baseweb="select"] span {
-        color: #FFFFFF !important;
-    }
-    ul[data-baseweb="menu"] {
-        background-color: #121212 !important;
-    }
-    ul[data-baseweb="menu"] li {
-        color: #FFFFFF !important;
-    }
-
-    /* Footer */
-    .main-footer {
-        text-align: center; 
-        color: #AAAAAA !important; 
-        font-size: 0.85rem;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# Sidebar Options
-st.sidebar.markdown("<h3 style='color: #D4AF37 !important;'>✨ FAFI DIGITALS</h3>", unsafe_allow_html=True)
-st.sidebar.markdown("<p style='color: #FFFFFF !important; font-size: 0.8rem;'>AI Marketing Suite v3.5</p>", unsafe_allow_html=True)
-st.sidebar.markdown("---")
-
-business_name = st.sidebar.text_input("🏢 Business / Brand Name", value="FAFI Digitals")
-phone_number = st.sidebar.text_input("📞 Direct Contact Number", value="0901183481")
+        color
