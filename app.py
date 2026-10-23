@@ -25,13 +25,14 @@ st.markdown("""
         color: #FFFFFF !important;
     }
 
-    /* Force Sidebar Specific Visibility Rules */
-    [data-testid="stSidebar"] * {
-        color: #FFFFFF !important;
-    }
-    [data-testid="stSidebar"] label, [data-testid="stSidebar"] p {
+    /* Force Sidebar Specific Label Rules - High Contrast */
+    [data-testid="stSidebar"] label {
         color: #D4AF37 !important;
-        font-weight: bold !important;
+        font-weight: 800 !important;
+        font-size: 1.0rem !important;
+    }
+    [data-testid="stSidebar"] p {
+        color: #FFFFFF !important;
     }
 
     /* All Header and Body Text Forced Bright White */
@@ -43,30 +44,35 @@ st.markdown("""
     /* Main Form Input Labels Bright Gold */
     .stTextInput > label, .stTextArea > label, .stSelectbox > label, .stMultiSelect > label {
         color: #D4AF37 !important;
-        font-weight: 700 !important;
-        font-size: 0.95rem !important;
+        font-weight: 800 !important;
+        font-size: 1.0rem !important;
     }
 
-    /* Input Fields Background & Contrast */
+    /* Input Fields Background & High Contrast Text */
     .stTextInput input, .stTextArea textarea {
         background-color: #1A1A1A !important;
         color: #FFFFFF !important;
-        border: 1px solid #333333 !important;
+        border: 1px solid #444444 !important;
         border-radius: 8px !important;
+        font-weight: 600 !important;
     }
 
-    /* Selectbox Container & Dropdown Styling */
+    /* Fix Selectbox & Dropdown Containers */
     div[data-baseweb="select"] > div {
         background-color: #1A1A1A !important;
-        border: 1px solid #333333 !important;
+        border: 1px solid #444444 !important;
         border-radius: 8px !important;
     }
     div[data-baseweb="select"] span {
         color: #FFFFFF !important;
+        font-weight: 600 !important;
+    }
+    div[data-baseweb="select"] div {
+        color: #FFFFFF !important;
     }
     ul[data-baseweb="menu"] {
         background-color: #1A1A1A !important;
-        border: 1px solid #333333 !important;
+        border: 1px solid #444444 !important;
     }
     ul[data-baseweb="menu"] li {
         color: #FFFFFF !important;
@@ -81,6 +87,7 @@ st.markdown("""
     span[data-baseweb="tag"] {
         background-color: #D4AF37 !important;
         color: #000000 !important;
+        font-weight: bold !important;
     }
 
     /* Hero Branding Header */
