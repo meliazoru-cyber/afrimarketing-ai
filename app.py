@@ -1,375 +1,110 @@
-import streamlit as st
-import time
+import os
+from PIL import Image, ImageDraw, ImageFont
 
-# Optional Live AI Import
-try:
-    import google.generativeai as genai
-    GEMINI_AVAILABLE = True
-except ImportError:
-    GEMINI_AVAILABLE = False
+def create_brand_assets():
+    # Brand Colors
+    GOLD = (212, 175, 55)        # Metallic Gold #D4AF37
+    OBSIDIAN = (15, 15, 15)      # Obsidian Black #0F0F0F
+    WHITE = (255, 255, 255)      # Pure White
+    DARK_CARD = (25, 25, 25)     # Dark Gray Card #191919
 
-# Page Configuration
-st.set_page_config(
-    page_title="AfriMarketing AI | FAFI Digitals",
-    page_icon="⚡",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+    output_dir = "brand_assets"
+    os.makedirs(output_dir, exist_ok=True)
 
-# High-Contrast High-Visibility Styling
-st.markdown("""
-    <style>
-    /* Global App Background */
-    .stApp, [data-testid="stSidebar"], [data-testid="stHeader"], [data-testid="stToolbar"] {
-        background-color: #050505 !important;
-        color: #FFFFFF !important;
-    }
+    # -------------------------------------------------------------
+    # 1. SQUARE LOGO / PROFILE ICON (1000x1000 px)
+    # -------------------------------------------------------------
+    logo_size = 1000
+    logo_img = Image.new("RGB", (logo_size, logo_size), OBSIDIAN)
+    draw = ImageDraw.Draw(logo_img)
 
-    /* Sidebar Labels Bright Gold */
-    [data-testid="stSidebar"] label {
-        color: #D4AF37 !important;
-        font-weight: 800 !important;
-        font-size: 1.0rem !important;
-    }
-    [data-testid="stSidebar"] p {
-        color: #FFFFFF !important;
-    }
-
-    /* All Header and Body Text Forced Bright White */
-    h1, h2, h3, h4, h5, h6, p, span, label, div, li, small {
-        color: #FFFFFF !important;
-        font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-
-    /* Main Form Input Labels Bright Gold */
-    .stTextInput > label, .stTextArea > label, .stSelectbox > label, .stMultiSelect > label {
-        color: #D4AF37 !important;
-        font-weight: 800 !important;
-        font-size: 1.0rem !important;
-    }
-
-    /* Input Fields Background White & Text SOLID BLACK */
-    .stTextInput input, .stTextArea textarea {
-        background-color: #FFFFFF !important;
-        color: #000000 !important;
-        border: 2px solid #D4AF37 !important;
-        border-radius: 8px !important;
-        font-weight: 700 !important;
-    }
-
-    /* Selectbox & Dropdown Containers - Bright White Field with BLACK Text */
-    div[data-baseweb="select"] > div {
-        background-color: #FFFFFF !important;
-        border: 2px solid #D4AF37 !important;
-        border-radius: 8px !important;
-    }
-    div[data-baseweb="select"] span {
-        color: #000000 !important;
-        font-weight: 700 !important;
-    }
-    div[data-baseweb="select"] div {
-        color: #000000 !important;
-    }
-    ul[data-baseweb="menu"] {
-        background-color: #FFFFFF !important;
-        border: 1px solid #CCCCCC !important;
-    }
-    ul[data-baseweb="menu"] li {
-        color: #000000 !important;
-        background-color: #FFFFFF !important;
-        font-weight: 600 !important;
-    }
-    ul[data-baseweb="menu"] li:hover {
-        background-color: #D4AF37 !important;
-        color: #000000 !important;
-    }
-
-    /* MultiSelect Tags */
-    span[data-baseweb="tag"] {
-        background-color: #D4AF37 !important;
-        color: #000000 !important;
-        font-weight: 800 !important;
-    }
-
-    /* Hero Branding Header */
-    .hero-container {
-        padding: 28px 22px;
-        background: #0F0F0F !important;
-        border: 1px solid #2B2B2B !important;
-        border-radius: 16px;
-        margin-bottom: 24px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.9);
-    }
-    .hero-title {
-        font-size: 2.8rem;
-        font-weight: 900;
-        color: #D4AF37 !important;
-        letter-spacing: -0.5px;
-        margin-bottom: 0px;
-    }
-    .hero-subtitle {
-        font-size: 1.05rem;
-        color: #FFFFFF !important;
-        margin-top: 6px;
-    }
-    .agency-tag {
-        display: inline-block;
-        background: rgba(212, 175, 55, 0.15) !important;
-        color: #D4AF37 !important;
-        border: 1px solid #D4AF37 !important;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 10px;
-    }
-
-    /* Telegram Message Preview Box */
-    .tg-preview-card {
-        background: #17212B !important;
-        border: 1px solid #2B5278 !important;
-        border-radius: 14px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.8);
-    }
-    .tg-header {
-        color: #64B5F6 !important;
-        font-size: 0.85rem;
-        font-weight: bold;
-        margin-bottom: 12px;
-    }
-
-    /* High-Contrast Output Cards */
-    .result-card {
-        background: #121212 !important;
-        border: 1px solid #2E2E2E !important;
-        border-left: 4px solid #D4AF37 !important;
-        padding: 22px;
-        border-radius: 12px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.8);
-    }
-    .result-card p, .result-card span, .result-card div, .result-card li, .result-card b, .result-card i {
-        color: #FFFFFF !important;
-    }
-
-    /* Gold Style Badges */
-    .style-pill {
-        background: #D4AF37 !important;
-        color: #000000 !important;
-        font-weight: 800;
-        padding: 4px 12px;
-        border-radius: 6px;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-    }
-
-    /* Metric Display Cards */
-    .metric-box {
-        background: #121212 !important;
-        border: 1px solid #2E2E2E !important;
-        padding: 16px;
-        border-radius: 12px;
-        text-align: center;
-    }
-    .metric-val {
-        color: #D4AF37 !important;
-        font-size: 1.15rem;
-        font-weight: bold;
-    }
-
-    /* Footer */
-    .main-footer {
-        text-align: center; 
-        color: #AAAAAA !important; 
-        font-size: 0.85rem;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# Sidebar Options
-st.sidebar.markdown("<h3 style='color: #D4AF37 !important;'>✨ FAFI DIGITALS</h3>", unsafe_allow_html=True)
-st.sidebar.markdown("<p style='color: #FFFFFF !important; font-size: 0.85rem;'>AI Marketing Suite v3.5</p>", unsafe_allow_html=True)
-st.sidebar.markdown("---")
-
-business_name = st.sidebar.text_input("🏢 Business / Brand Name", value="FAFI Digitals")
-phone_number = st.sidebar.text_input("📞 Direct Contact Number", value="0901183481")
-location = st.sidebar.selectbox("📍 Target Market", ["Addis Ababa Urban", "Regional Centers", "Ethiopian Diaspora", "Nationwide"])
-brand_tone = st.sidebar.selectbox("🎨 Brand Tone", ["High-End Luxury", "Gen-Z Viral Slang", "Direct Sales Heavy", "Educational & Trust"])
-payment_method = st.sidebar.multiselect("💳 Payment Methods", ["telebirr", "CBE Birr", "Bank Transfer", "Cash on Delivery"], default=["telebirr", "Cash on Delivery"])
-
-st.sidebar.markdown("---")
-gemini_api_key = st.sidebar.text_input("🔑 Gemini API Key (Optional)", type="password", help="Leave blank for built-in local engine!")
-
-# Hero Section
-st.markdown("""
-    <div class="hero-container">
-        <div class="agency-tag">Powered by FAFI Digitals</div>
-        <p class="hero-title">AfriMarketing AI 🇪🇹</p>
-        <p class="hero-subtitle">High-converting copywriting intelligence and localized campaign strategy engineered for Ethiopia.</p>
-    </div>
-""", unsafe_allow_html=True)
-
-# Main Form Layout
-col1, col2 = st.columns([2, 1], gap="large")
-
-with col1:
-    product_description = st.text_area(
-        "✍️ Describe your product, service, or campaign goal:",
-        placeholder="e.g., Premium logo vectors, visual branding, and video editing packages for startups in Addis Ababa with telebirr checkout...",
-        height=140
+    # Draw Outer Metallic Gold Circular Ring
+    margin = 80
+    ring_width = 16
+    draw.ellipse(
+        [margin, margin, logo_size - margin, logo_size - margin],
+        outline=GOLD,
+        width=ring_width
     )
 
-with col2:
-    st.markdown("<h4 style='color: #D4AF37 !important;'>⚡ Local Market Signals</h4>", unsafe_allow_html=True)
-    st.markdown("""
-        <div class="metric-box">
-            <div style="font-size: 0.8rem; color: #CCCCCC;">Telegram Channel Peak</div>
-            <div class="metric-val">12:30 PM & 7:30 PM EAT</div>
-        </div>
-        <br>
-        <div class="metric-box">
-            <div style="font-size: 0.8rem; color: #CCCCCC;">TikTok Hook Peak</div>
-            <div class="metric-val">6:00 PM – 9:30 PM EAT</div>
-        </div>
-    """, unsafe_allow_html=True)
+    # Draw Central Monogram Box / Accent
+    center_box = [300, 300, 700, 700]
+    draw.rectangle(center_box, outline=GOLD, width=8)
 
-st.markdown("<br>", unsafe_allow_html=True)
+    # Add Brand Monogram Text "FD" & Agency Name
+    try:
+        font_large = ImageFont.truetype("arial.ttf", 220)
+        font_small = ImageFont.truetype("arial.ttf", 48)
+    except IOError:
+        font_large = ImageFont.load_default()
+        font_small = ImageFont.load_default()
 
-# Helper function for Live Gemini API
-def generate_ai_content(prompt):
-    if GEMINI_AVAILABLE and gemini_api_key:
-        try:
-            genai.configure(api_key=gemini_api_key)
-            model = genai.GenerativeModel("gemini-1.5-flash")
-            response = model.generate_content(prompt)
-            return response.text
-        except Exception:
-            return None
-    return None
+    # Draw Monogram
+    draw.text((370, 350), "FD", fill=GOLD, font=font_large)
+    
+    # Draw Brand Title Below Box
+    draw.text((320, 750), "FAFI DIGITALS", fill=WHITE, font=font_small)
 
-# Action Generator Button
-if st.button("🚀 GENERATE CREATIVE CAMPAIGN SUITE", type="primary", use_container_width=True):
-    if not product_description:
-        st.warning("Please describe your offer or business goal first!")
-    else:
-        with st.spinner("FAFI Digitals AI is crafting your marketing suite..."):
-            payments_str = " | ".join(payment_method) if payment_method else "Contact admin"
-            
-            ai_prompt = (
-                f"Act as a top digital marketer for {business_name} in Ethiopia.\n"
-                f"Tone: {brand_tone}\nOffer: {product_description}\nLocation: {location}\n"
-                f"Payment: {payments_str}\nPhone: {phone_number}\n\n"
-                f"Create 5 Ethio-English social captions, a 15-second TikTok video script, and local marketing tips."
-            )
-            
-            ai_output = generate_ai_content(ai_prompt)
-            time.sleep(1.0)
+    logo_path = os.path.join(output_dir, "fafi_digitals_logo.png")
+    logo_img.save(logo_path)
+    print(f"✅ Logo generated: {logo_path}")
 
-        st.success("Campaign Suite Successfully Generated!")
+    # -------------------------------------------------------------
+    # 2. TELEGRAM / SOCIAL MEDIA HEADER BANNER (1200x630 px)
+    # -------------------------------------------------------------
+    banner_w, banner_h = 1200, 630
+    banner_img = Image.new("RGB", (banner_w, banner_h), OBSIDIAN)
+    draw_b = ImageDraw.Draw(banner_img)
 
-        # Tabs Setup
-        tab1, tab2, tab3, tab4 = st.tabs([
-            "📲 Live Telegram Mockup", 
-            "🔥 5 High-Conversion Captions", 
-            "🎬 TikTok Storyboard Script", 
-            "📅 Weekly Growth Blueprint"
-        ])
+    # Left Decorative Gold Border Line
+    draw_b.rectangle([0, 0, 20, banner_h], fill=GOLD)
 
-        # TAB 1: LIVE TELEGRAM MOCKUP
-        with tab1:
-            st.markdown("<h3 style='color: #D4AF37 !important;'>Telegram Channel Broadcast Preview</h3>", unsafe_allow_html=True)
-            
-            b_name_upper = business_name.upper()
-            loc_upper = location.upper()
-            
-            tg_sample_text = (
-                f"✨ <b>{b_name_upper}</b> | {loc_upper}<br><br>"
-                f"📌 <b>ለድርጅትዎ የሚሆን ምርጥ አሰራር:</b><br>{product_description}<br><br>"
-                f"💳 <b>የክፍያ መንገዶች / Payment:</b> {payments_str}<br>"
-                f"📍 <b>አድራሻ / Location:</b> {location}<br><br>"
-                f"📞 <b>ለማዘዝ በቀጥታ ይደውሉ:</b> {phone_number}<br>"
-                f"📲 <b>Telegram Direct:</b> @FAFIdigitals"
-            )
+    # Header Card Box
+    draw_b.rectangle([60, 60, banner_w - 60, banner_h - 60], fill=DARK_CARD, outline=GOLD, width=3)
 
-            tg_card_html = (
-                f'<div class="tg-preview-card">'
-                f'<div class="tg-header">📢 {business_name} Official Broadcast</div>'
-                f'<div style="font-size: 0.95rem; line-height: 1.6; color: #FFFFFF;">{tg_sample_text}</div>'
-                f'<div style="text-align: right; font-size: 0.75rem; color: #64B5F6; margin-top: 12px;">12:30 PM • 1.4K views</div>'
-                f'</div>'
-            )
-            st.markdown(tg_card_html, unsafe_allow_html=True)
+    try:
+        font_title = ImageFont.truetype("arial.ttf", 72)
+        font_sub = ImageFont.truetype("arial.ttf", 36)
+        font_contact = ImageFont.truetype("arial.ttf", 32)
+    except IOError:
+        font_title = ImageFont.load_default()
+        font_sub = ImageFont.load_default()
+        font_contact = ImageFont.load_default()
 
-        # TAB 2: CAPTIONS
-        with tab2:
-            st.markdown(f"<h3 style='color: #D4AF37 !important; margin-bottom: 20px;'>Generated Copy Options ({brand_tone})</h3>", unsafe_allow_html=True)
-            
-            if ai_output:
-                ai_card = (
-                    f'<div class="result-card">'
-                    f'<span class="style-pill">DYNAMIC AI GENERATION</span>'
-                    f'<p style="color: #FFFFFF !important; white-space: pre-line; line-height: 1.6; margin-top: 15px;">{ai_output}</p>'
-                    f'</div>'
-                )
-                st.markdown(ai_card, unsafe_allow_html=True)
-            else:
-                captions = [
-                    ("STYLE 1: Direct Conversion CTA", f"✨ **{business_name}** - {location}\n\n📌 **ለድርጅትዎ የሚሆን ምርጥ አሰራር:**\n{product_description}\n\n💳 **Payment:** {payments_str}\n📍 **Location:** {location}\n📞 **ለማዘዝ በቀጥታ ይደውሉ / Call/Text Now:** {phone_number}\n👉 Join our official Telegram channel for direct updates!"),
-                    ("STYLE 2: Storytelling & Problem Solver", f"\"አዲስ ነገር ለሚፈልጉ ሁሉ! 🇪🇹🔥\"\n\nStruggling to stand out in {location}? **{business_name}** provides the exact solution you need.\n\n{product_description}\n\n💡 Simple, reliable, and tailored for your brand growth.\n📲 **Direct Contact:** Call or message us directly at {phone_number}\n💳 **Accepted:** {payments_str}"),
-                    ("STYLE 3: Urgency & Limited Slots", f"⚡ **SPECIAL LIMITED OFFER THIS WEEK!** ⚡\n\n**{business_name}** brings you exclusive services in {location}.\n\n👉 {product_description}\n\n🔥 Only 5 client slots remaining for this week! Secure yours now.\n📞 **Quick Booking:** Call or Telegram us at {phone_number}\n💳 **Payment via:** {payments_str}"),
-                    ("STYLE 4: Educational & Trust First", f"💡 **Did you know?** Professional presentation increases customer trust by over 60% in local markets.\n\nAt **{business_name}**, we handle it effortlessly:\n• {product_description}\n\n📩 Request a consultation today! Call/SMS: {phone_number}"),
-                    ("STYLE 5: Gen-Z Viral Hook", f"\"አዲስ አበቤዎች Check this out! 🇪🇹✨\"\n\nIf you want top-tier quality without the usual hassle, **{business_name}** has you covered.\n\n{product_description}\n\n👇 Text us on Telegram or call {phone_number} to order instantly! 💬")
-                ]
+    # Banner Content
+    draw_b.text((100, 120), "FAFI DIGITALS", fill=GOLD, font=font_title)
+    draw_b.text((100, 220), "AfriMarketing AI & Digital Growth Suite", fill=WHITE, font=font_sub)
+    draw_b.text((100, 300), "• Visual Branding  • Copywriting  • Social Media Strategy", fill=(200, 200, 200), font=font_contact)
 
-                for title, text in captions:
-                    short_title = title.split(':')[0]
-                    card_html = (
-                        f'<div class="result-card">'
-                        f'<span class="style-pill">{short_title}</span>'
-                        f'<h4 style="color: #D4AF37 !important; margin-top: 10px;">{title}</h4>'
-                        f'<p style="color: #FFFFFF !important; white-space: pre-line; line-height: 1.6;">{text}</p>'
-                        f'</div>'
-                    )
-                    st.markdown(card_html, unsafe_allow_html=True)
+    # Contact Info Bar
+    draw_b.line([(100, 420), (1100, 420)], fill=GOLD, width=2)
+    draw_b.text((100, 460), "📍 Addis Ababa, Ethiopia   |   📞 0901183481   |   📲 @FAFIdigitals", fill=GOLD, font=font_contact)
 
-        # TAB 3: TIKTOK SCRIPT
-        with tab3:
-            st.markdown("<h3 style='color: #D4AF37 !important;'>15-Second Viral Short Video Storyboard</h3>", unsafe_allow_html=True)
-            script_html = (
-                f'<div class="result-card">'
-                f'<p style="color: #FFFFFF !important; line-height: 1.8;">'
-                f'🎥 <b>0–3s (Visual Hook):</b> High-energy fast cuts showing your work or studio process in {location} with trending Habesha audio beat.<br>'
-                f'🗣️ <b>Voiceover:</b> <i>"አዲስ አበቤዎች! If you want your business to stand out, watch this."</i><br><br>'
-                f'🎬 <b>3–10s (Value Pitch):</b> Show clear close-ups or client results.<br>'
-                f'🗣️ <b>Voiceover:</b> <i>"{business_name} delivers top-tier results tailored specifically for businesses in {location}."</i><br><br>'
-                f'🎯 <b>10–15s (Call to Action):</b> Clean screen displaying telebirr badge and your direct phone number <b>{phone_number}</b>.<br>'
-                f'🗣️ <b>Voiceover:</b> <i>"Call or message us right now at {phone_number} to secure your slot!"</i>'
-                f'</p>'
-                f'</div>'
-            )
-            st.markdown(script_html, unsafe_allow_html=True)
+    banner_path = os.path.join(output_dir, "fafi_digitals_banner.png")
+    banner_img.save(banner_path)
+    print(f"✅ Social Banner generated: {banner_path}")
 
-        # TAB 4: GROWTH PLAN
-        with tab4:
-            st.markdown("<h3 style='color: #D4AF37 !important;'>📅 Weekly Schedule & Local Hashtags</h3>", unsafe_allow_html=True)
-            calendar_html = (
-                f'<div class="result-card">'
-                f'<p style="color: #FFFFFF !important; line-height: 1.8;">'
-                f'📌 <b>Recommended Local Hashtags:</b><br>'
-                f'#AddisAbaba #Ethiopia #FAFI_Digitals #HabeshaStartups #AddisBusiness #Telebirr #MadeInEthiopia<br><br>'
-                f'🕒 <b>Best Posting Blueprint (EAT):</b><br>'
-                f'• <b>Monday (12:30 PM):</b> Post Educational (Style 4) on Telegram to build trust.<br>'
-                f'• <b>Wednesday (7:00 PM):</b> Post TikTok video script with trending Habesha audio beat.<br>'
-                f'• <b>Friday (1:00 PM):</b> Push Flash Offer (Style 3) with direct call CTA ({phone_number}) and telebirr details.'
-                f'</p>'
-                f'</div>'
-            )
-            st.markdown(calendar_html, unsafe_allow_html=True)
+    # -------------------------------------------------------------
+    # 3. PROMOTIONAL WATERMARK / BADGE (800x200 px)
+    # -------------------------------------------------------------
+    badge_w, badge_h = 800, 200
+    badge_img = Image.new("RGBA", (badge_w, badge_h), (15, 15, 15, 230))
+    draw_bg = ImageDraw.Draw(badge_img)
 
-# Footer
-st.markdown("---")
-st.markdown("<p class='main-footer'>AfriMarketing AI • Designed & Developed by <b>FAFI Digitals</b></p>", unsafe_allow_html=True)
+    # Gold Accent Line
+    draw_bg.rectangle([0, 0, badge_w, 8], fill=GOLD)
+    draw_bg.rectangle([0, badge_h - 8, badge_w, badge_h], fill=GOLD)
+
+    try:
+        font_badge = ImageFont.truetype("arial.ttf", 40)
+    except IOError:
+        font_badge = ImageFont.load_default()
+
+    draw_bg.text((40, 70), "POWERED BY FAFI DIGITALS", fill=GOLD, font=font_badge)
+
+    badge_path = os.path.join(output_dir, "fafi_watermark_badge.png")
+    badge_img.save(badge_path)
+    print(f"✅ Watermark Badge generated: {badge_path}")
+
+if __name__ == "__main__":
+    create_brand_assets()
