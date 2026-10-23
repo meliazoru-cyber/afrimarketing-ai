@@ -123,4 +123,17 @@ st.markdown("""
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 1px;
-        margin-bottom: 10
+        margin-bottom: 10px;
+    }
+
+    /* Telegram Message Preview Box */
+    .tg-preview-card {
+        background: #17212B !important;
+        border: 1px solid #2B5278 !important;
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+    }
+    .tg-header {
+        color
