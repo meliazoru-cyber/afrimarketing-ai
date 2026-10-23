@@ -57,7 +57,7 @@ st.markdown("""
         font-weight: 700 !important;
     }
 
-    /* Fix Selectbox & Dropdown Containers - Bright White Field with BLACK Text */
+    /* Selectbox & Dropdown Containers - Bright White Field with BLACK Text */
     div[data-baseweb="select"] > div {
         background-color: #FFFFFF !important;
         border: 2px solid #D4AF37 !important;
@@ -259,7 +259,12 @@ if st.button("🚀 GENERATE CREATIVE CAMPAIGN SUITE", type="primary", use_contai
         with st.spinner("FAFI Digitals AI is crafting your marketing suite..."):
             payments_str = " | ".join(payment_method) if payment_method else "Contact admin"
             
-            ai_prompt = f"Act as a top digital marketer for {business_name} in Ethiopia.\nTone: {brand_tone}\nOffer: {product_description}\nLocation: {location}\nPayment: {payments_str}\nPhone: {phone_number}\n\nCreate 5 Ethio-English social captions, a 15-second TikTok video script, and local marketing tips."
+            ai_prompt = (
+                f"Act as a top digital marketer for {business_name} in Ethiopia.\n"
+                f"Tone: {brand_tone}\nOffer: {product_description}\nLocation: {location}\n"
+                f"Payment: {payments_str}\nPhone: {phone_number}\n\n"
+                f"Create 5 Ethio-English social captions, a 15-second TikTok video script, and local marketing tips."
+            )
             
             ai_output = generate_ai_content(ai_prompt)
             time.sleep(1.0)
@@ -276,4 +281,95 @@ if st.button("🚀 GENERATE CREATIVE CAMPAIGN SUITE", type="primary", use_contai
 
         # TAB 1: LIVE TELEGRAM MOCKUP
         with tab1:
-            st.markdown("<h3 style='color: #D4
+            st.markdown("<h3 style='color: #D4AF37 !important;'>Telegram Channel Broadcast Preview</h3>", unsafe_allow_html=True)
+            
+            b_name_upper = business_name.upper()
+            loc_upper = location.upper()
+            
+            tg_sample_text = (
+                f"✨ <b>{b_name_upper}</b> | {loc_upper}<br><br>"
+                f"📌 <b>ለድርጅትዎ የሚሆን ምርጥ አሰራር:</b><br>{product_description}<br><br>"
+                f"💳 <b>የክፍያ መንገዶች / Payment:</b> {payments_str}<br>"
+                f"📍 <b>አድራሻ / Location:</b> {location}<br><br>"
+                f"📞 <b>ለማዘዝ በቀጥታ ይደውሉ:</b> {phone_number}<br>"
+                f"📲 <b>Telegram Direct:</b> @FAFIdigitals"
+            )
+
+            tg_card_html = (
+                f'<div class="tg-preview-card">'
+                f'<div class="tg-header">📢 {business_name} Official Broadcast</div>'
+                f'<div style="font-size: 0.95rem; line-height: 1.6; color: #FFFFFF;">{tg_sample_text}</div>'
+                f'<div style="text-align: right; font-size: 0.75rem; color: #64B5F6; margin-top: 12px;">12:30 PM • 1.4K views</div>'
+                f'</div>'
+            )
+            st.markdown(tg_card_html, unsafe_allow_html=True)
+
+        # TAB 2: CAPTIONS
+        with tab2:
+            st.markdown(f"<h3 style='color: #D4AF37 !important; margin-bottom: 20px;'>Generated Copy Options ({brand_tone})</h3>", unsafe_allow_html=True)
+            
+            if ai_output:
+                ai_card = (
+                    f'<div class="result-card">'
+                    f'<span class="style-pill">DYNAMIC AI GENERATION</span>'
+                    f'<p style="color: #FFFFFF !important; white-space: pre-line; line-height: 1.6; margin-top: 15px;">{ai_output}</p>'
+                    f'</div>'
+                )
+                st.markdown(ai_card, unsafe_allow_html=True)
+            else:
+                captions = [
+                    ("STYLE 1: Direct Conversion CTA", f"✨ **{business_name}** - {location}\n\n📌 **ለድርጅትዎ የሚሆን ምርጥ አሰራር:**\n{product_description}\n\n💳 **Payment:** {payments_str}\n📍 **Location:** {location}\n📞 **ለማዘዝ በቀጥታ ይደውሉ / Call/Text Now:** {phone_number}\n👉 Join our official Telegram channel for direct updates!"),
+                    ("STYLE 2: Storytelling & Problem Solver", f"\"አዲስ ነገር ለሚፈልጉ ሁሉ! 🇪🇹🔥\"\n\nStruggling to stand out in {location}? **{business_name}** provides the exact solution you need.\n\n{product_description}\n\n💡 Simple, reliable, and tailored for your brand growth.\n📲 **Direct Contact:** Call or message us directly at {phone_number}\n💳 **Accepted:** {payments_str}"),
+                    ("STYLE 3: Urgency & Limited Slots", f"⚡ **SPECIAL LIMITED OFFER THIS WEEK!** ⚡\n\n**{business_name}** brings you exclusive services in {location}.\n\n👉 {product_description}\n\n🔥 Only 5 client slots remaining for this week! Secure yours now.\n📞 **Quick Booking:** Call or Telegram us at {phone_number}\n💳 **Payment via:** {payments_str}"),
+                    ("STYLE 4: Educational & Trust First", f"💡 **Did you know?** Professional presentation increases customer trust by over 60% in local markets.\n\nAt **{business_name}**, we handle it effortlessly:\n• {product_description}\n\n📩 Request a consultation today! Call/SMS: {phone_number}"),
+                    ("STYLE 5: Gen-Z Viral Hook", f"\"አዲስ አበቤዎች Check this out! 🇪🇹✨\"\n\nIf you want top-tier quality without the usual hassle, **{business_name}** has you covered.\n\n{product_description}\n\n👇 Text us on Telegram or call {phone_number} to order instantly! 💬")
+                ]
+
+                for title, text in captions:
+                    short_title = title.split(':')[0]
+                    card_html = (
+                        f'<div class="result-card">'
+                        f'<span class="style-pill">{short_title}</span>'
+                        f'<h4 style="color: #D4AF37 !important; margin-top: 10px;">{title}</h4>'
+                        f'<p style="color: #FFFFFF !important; white-space: pre-line; line-height: 1.6;">{text}</p>'
+                        f'</div>'
+                    )
+                    st.markdown(card_html, unsafe_allow_html=True)
+
+        # TAB 3: TIKTOK SCRIPT
+        with tab3:
+            st.markdown("<h3 style='color: #D4AF37 !important;'>15-Second Viral Short Video Storyboard</h3>", unsafe_allow_html=True)
+            script_html = (
+                f'<div class="result-card">'
+                f'<p style="color: #FFFFFF !important; line-height: 1.8;">'
+                f'🎥 <b>0–3s (Visual Hook):</b> High-energy fast cuts showing your work or studio process in {location} with trending Habesha audio beat.<br>'
+                f'🗣️ <b>Voiceover:</b> <i>"አዲስ አበቤዎች! If you want your business to stand out, watch this."</i><br><br>'
+                f'🎬 <b>3–10s (Value Pitch):</b> Show clear close-ups or client results.<br>'
+                f'🗣️ <b>Voiceover:</b> <i>"{business_name} delivers top-tier results tailored specifically for businesses in {location}."</i><br><br>'
+                f'🎯 <b>10–15s (Call to Action):</b> Clean screen displaying telebirr badge and your direct phone number <b>{phone_number}</b>.<br>'
+                f'🗣️ <b>Voiceover:</b> <i>"Call or message us right now at {phone_number} to secure your slot!"</i>'
+                f'</p>'
+                f'</div>'
+            )
+            st.markdown(script_html, unsafe_allow_html=True)
+
+        # TAB 4: GROWTH PLAN
+        with tab4:
+            st.markdown("<h3 style='color: #D4AF37 !important;'>📅 Weekly Schedule & Local Hashtags</h3>", unsafe_allow_html=True)
+            calendar_html = (
+                f'<div class="result-card">'
+                f'<p style="color: #FFFFFF !important; line-height: 1.8;">'
+                f'📌 <b>Recommended Local Hashtags:</b><br>'
+                f'#AddisAbaba #Ethiopia #FAFI_Digitals #HabeshaStartups #AddisBusiness #Telebirr #MadeInEthiopia<br><br>'
+                f'🕒 <b>Best Posting Blueprint (EAT):</b><br>'
+                f'• <b>Monday (12:30 PM):</b> Post Educational (Style 4) on Telegram to build trust.<br>'
+                f'• <b>Wednesday (7:00 PM):</b> Post TikTok video script with trending Habesha audio beat.<br>'
+                f'• <b>Friday (1:00 PM):</b> Push Flash Offer (Style 3) with direct call CTA ({phone_number}) and telebirr details.'
+                f'</p>'
+                f'</div>'
+            )
+            st.markdown(calendar_html, unsafe_allow_html=True)
+
+# Footer
+st.markdown("---")
+st.markdown("<p class='main-footer'>AfriMarketing AI • Designed & Developed by <b>FAFI Digitals</b></p>", unsafe_allow_html=True)
